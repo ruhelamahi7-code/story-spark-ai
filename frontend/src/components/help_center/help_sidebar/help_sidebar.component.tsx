@@ -135,53 +135,67 @@ const HelpSidebar = () => {
                   );
                 })}
               </div>
-
-              <motion.div
-                whileHover={{ y: -2 }}
-                className="relative mt-5 overflow-hidden rounded-2xl border border-blue-200 bg-gradient-to-br from-blue-50 via-indigo-50 to-white p-3.5 dark:border-indigo-500/20 dark:from-indigo-500/10 dark:via-blue-500/10 dark:to-slate-900/30"
-              >
-                <div className="absolute top-0 right-0 w-28 h-28 bg-blue-500/10 rounded-full blur-3xl" />
-                <div className="relative z-10">
-                  <div className="mb-3 flex items-center gap-3">
-                    <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-br from-blue-500 to-indigo-600 text-white shadow-md">
-                      <i className="fa-solid fa-sparkles text-sm"></i>
-                    </div>
-                    <div>
-                      <h3 className="text-sm font-bold text-slate-800 dark:text-white">Need More Help?</h3>
-                      <p className="text-xs text-slate-600 dark:text-slate-400">Contact support</p>
-                    </div>
+            {/* Support CTA Card */}
+            <motion.div
+              whileHover={{ y: -2 }}
+              className="relative overflow-hidden mt-8 rounded-3xl border border-blue-200 dark:border-indigo-500/20 bg-gradient-to-br from-blue-50 via-indigo-50 to-white dark:from-indigo-500/10 dark:via-blue-500/10 dark:to-slate-900/30 p-6"
+            >
+              <div className="absolute top-0 right-0 w-28 h-28 bg-blue-500/10 rounded-full blur-3xl" />
+              <div className="relative z-10">
+                <div className="flex items-center gap-4 mb-4">
+                  <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-blue-500 to-indigo-600 text-white flex items-center justify-center shadow-lg">
+                    <i className="fa-solid fa-sparkles text-lg" aria-hidden="true" />
                   </div>
-                  <button
-                    onClick={() => scrollToSection("support-links-section")}
-                    className="w-full rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 py-2 text-sm font-semibold text-white shadow-md shadow-blue-500/20 transition-all duration-300 hover:scale-[1.01] hover:from-blue-700 hover:to-indigo-700"
-                  >
-                    Support Links
-                  </button>
+                  <div>
+                    <h3 className="font-bold text-slate-800 dark:text-white">Need More Help?</h3>
+                    <p className="text-sm text-slate-600 dark:text-slate-400">Contact support</p>
+                  </div>
                 </div>
-              </motion.div>
-            </div>
-          </motion.div>
-        </div>
-      </nav>
+
+                <button
+                  type="button"
+                  onClick={() => scrollToSection("support-links-section")}
+                  className="w-full rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-semibold py-2.5 text-sm transition-all duration-300 shadow-md shadow-blue-500/10"
+                >
+                  Open Support Hub
+                </button>
+              </div>
+            </motion.div>
+          </div>
+        </motion.div>
+      </div>
+    </nav>
+
 
       {/* Mobile horizontal scroll nav */}
-      <nav className="lg:hidden sticky top-0 z-20 -mx-4 px-4 py-3 bg-white/90 dark:bg-slate-900/90 backdrop-blur-md border-b border-gray-200 dark:border-white/10 mb-8" aria-label="Help center sections">
-        <div className="flex gap-2 overflow-x-auto pb-1 scrollbar-thin">
-          {HELP_SECTIONS.map((section) => (
-            <button
-              key={section.id}
-              type="button"
-              onClick={() => scrollToSection(section.id)}
-              className={`flex-shrink-0 px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 ${
-                activeSection === section.id
-                  ? "bg-indigo-100 dark:bg-indigo-500/30 text-indigo-800 dark:text-indigo-200 border border-indigo-300 dark:border-indigo-500/40 shadow-sm dark:shadow-none"
-                  : "bg-gray-50 dark:bg-white/5 text-gray-600 dark:text-gray-400 border border-gray-200 dark:border-white/10 hover:bg-gray-100 dark:hover:bg-white/10"
-              }`}
-              aria-current={activeSection === section.id ? "true" : undefined}
-            >
-              {section.label}
-            </button>
-          ))}
+      <nav
+        className="lg:hidden sticky top-0 z-20 -mx-4 px-4 py-3 bg-white/90 dark:bg-slate-900/90 backdrop-blur-sm border-b border-slate-200 dark:border-white/10 mb-8 overflow-hidden select-none"
+
+        aria-label="Help center mobile navigation"
+      >
+        <div 
+          ref={mobileNavRef} 
+          className="flex gap-2 overflow-x-auto pb-1 scrollbar-none w-full items-center box-border touch-pan-x"
+        >
+          {HELP_SECTIONS.map((section) => {
+            const isSelected = activeSection === section.id;
+            return (
+              <button
+                key={section.id}
+                type="button"
+                data-section-id={section.id}
+                onClick={() => scrollToSection(section.id)}
+                className={`flex-shrink-0 px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 ${
+                  isSelected
+                    ? "bg-indigo-100 dark:bg-indigo-500/30 text-indigo-700 dark:text-indigo-200 border border-indigo-300 dark:border-indigo-500/40 shadow-sm"
+                    : "bg-white dark:bg-white/5 text-slate-600 dark:text-gray-400 border border-slate-200 dark:border-white/10 hover:bg-slate-100 dark:hover:bg-white/10"
+                }`}
+                aria-current={isSelected ? "true" : undefined}
+              >
+                {section.label}
+              </button>
+            );
+          })}
         </div>
       </nav>
     </>
